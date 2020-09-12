@@ -350,6 +350,8 @@ print(f"Last interation result is {fibonacci(5)}")
 
 
 #*******************MINE WITH FOR LOOP
+# The fibonacci series
+# 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765, 10946, 17711, 28657, 46368, 75025, 121393, 196418, 317811, ...
 def fib(n):
     #initialize the list with starting elements: 0, 1
     fibonacciSeries = [0,1]
@@ -375,6 +377,7 @@ print(my_list)
 
 
 #***************** Two Pointers Week3day3 ****************
+#This reverses the list
 def twoPointers(alist):
     left = 0
     right = len(alist) -1
@@ -384,6 +387,7 @@ def twoPointers(alist):
         left = left + 1
         right = right - 1
     return alist
+    
 alist = [8,7,6,55,66,77]
 print(twoPointers(alist))
 
@@ -470,8 +474,8 @@ print(firstUniqChar('lllll'))
 
 #check ing for alpha numeric charcters
 # .isalnum
-# .isal
-# .isalnum
+# .isalpha
+# .isnumeric
 
 import re
 def palindrome(str1):
@@ -513,6 +517,44 @@ str1 = "race a car"
 str2 = "A man, a plan, a canal: Panama"
 print(isPal(str2))
 
+# Example 1:
+# Input: aa
+# Output: true
+# Explanation: The value 1 has 3 occurrences, 2 has 2 and 3 has 1. 
+# No two values have the same number of occurrences.
+# Example 2:
+
+# Input: arr = [1,2]
+# Output: false
+# Example 3:
+
+# Input: arr = [-3,0,1,-3,1,1,1,-3,10,0]
+# Output: true 
+
+# Constraints:
+# 1 <= arr.length <= 1000
+# -1000 <= arr[i] <= 1000
+
+# class Solution:
+
+def uniqueOccurrences(arr):
+  arr_dict={}
+  for i in range(0, len(arr)):
+    if arr[i] not in arr_dict:
+      arr_dict[arr[i]] = 1
+    else:
+      arr_dict[arr[i]] +=1
+
+  results = []
+  for value in arr_dict.values():
+    if value not in results:
+      results.append(value)
+    else:
+      return False
+  return True    
+
+arr = [1,2]
+print(uniqueOccurrences(arr))
 
 #***********************************week4 day3 WB
 
@@ -748,7 +790,7 @@ def two_sum(numbers, target):
 
     return result
 
-{}
+
 
 numbers = [2,2,3]
 target = 9
@@ -811,9 +853,15 @@ print(anagram(s,t))
 
 def minimumAbsDifference(array):
     diff_list = []    
-    #if you sort the arrays first, then you would have  the min diff?
+    #if you sort the arrays first, so you have the
+    # sequential order of the digits 
     nums = sorted(array)
-    min_diff = nums[1] - nums[0]
+    #this subtracts the last number(highest)
+    #from the first number(lowest) so we know
+    #all diff have to be smaller than this
+    # we don't worry about absolutes , we are always 
+    #subtracting the next num from prev num
+    min_diff = nums[-1] - nums[0]
     for i in range(0, len(nums)-1):
         if (nums[i + 1] - nums[i]) < min_diff: 
             min_diff = nums[i +1] - nums[i]
@@ -822,37 +870,8 @@ def minimumAbsDifference(array):
             diff_list.append([nums[i], nums[i +1]])
     return diff_list
 
-array = [4,2,1,3]
+array = [1,3,6,10,14, 15]
 print(minimumAbsDifference(array))
-
-
-# Nates
-def minimumAbsDifference(arr):
-    lst = []
-    arr.sort()
-    diff = arr[1] - arr[0]
-    for x in range(1,len(arr)-1):
-        if arr[x+1]-arr[x] < diff:
-            diff = arr[x+1] - arr[x]
-    for x in range(0, len(arr)-1):
-        if arr[x+1]- arr[x] == diff:
-            lst.append([arr[x], arr[x+1]])
-    return lst      
-
-# Asia Bragg  10:11 AM
-arr = [3,8,-10,23,19,-4,-14,27]
-def minimumAbsDifference(arr):
-    arr.sort()
-    new = []
-    min_dif = arr[-1] - arr[0]
-    for num in range(len(arr)-1):
-        if arr[num + 1] - arr[num] < min_dif:
-            new = [[arr[num], arr[num + 1]]]
-            min_dif = arr[num+1] - arr[num]
-        elif arr[num + 1] - arr[num] == min_dif:
-            new.append([arr[num], arr[num + 1]])
-    return new
-print(minimumAbsDifference(arr))
 
 #Brians see wekk 5 screen shots
 
@@ -1191,3 +1210,30 @@ def twoPointers(a_list,target):
 target = 12
 my_list2 = [1,5,8,11,13,42]
 print(twoPointers(my_list2,target))
+
+#1304.LeetCode-  Find N Unique Integers Sum up to Zero Sept # #         """10,2020
+
+# Given an integer n, return any array containing n unique integers such that they add up to 0.
+# Input: n = 5
+# Output: [-7,-1,1,3,4]
+# Explanation: These arrays also are accepted [-5,-1,1,2,3] , [-3,-1,2,-2,4].
+# class Solution(object):
+#     def sumZero(self, n):
+#         """
+#         :type n: int
+# #         :rtype: List[int]
+
+
+#for i in range(1,n+1):
+def sumZero(n):
+    num_list = []
+    for i in range(n//2):      
+        if n not in num_list:
+            num_list.append(i +1)
+            num_list.append(-(i+1))  
+    if n%2 != 0:
+        num_list.append(0)
+    return num_list
+            
+
+print(sumZero(5))
