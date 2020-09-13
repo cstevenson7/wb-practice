@@ -1012,7 +1012,20 @@ def insertionSort(array):
             swap(j, j-1, array)
             j-=1
     return array
-print
+
+print(insertionSort([10,50,30,2,1]))
+
+
+#All in one 
+def insertionSort(array):
+    for i in range(1,len(array)):  #Not -1   start at index1 (lookin at the vaue first NEXT to the first number and using the lenght of the array no the incex numbeer
+       #in the arraythis time going past the array
+        j = i  #poiunter as a placeholder not we can increemtn i 
+        while j > 0 and array[j] < array[j-1]:   #looking backward
+            array[j], array[j-1] = array[j-1], array[j]
+            j-=1
+    return array
+
 print(insertionSort([10,50,30,2,1]))
 
 

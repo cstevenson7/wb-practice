@@ -1333,15 +1333,202 @@
 
 
 
-Given an integer n, return any array containing n unique integers such that they add up to 0.
-Input: n = 5
-Output: [-7,-1,1,3,4]
-Explanation: These arrays also are accepted [-5,-1,1,2,3] , [-3,-1,2,-2,4].
-class Solution(object):
-    def sumZero(self, n):
-        """
-        :type n: int
-        :rtype: List[int]
-        """
+# Given an integer n, return any array containing n unique integers such that they add up to 0.
+# Input: n = 5
+# Output: [-7,-1,1,3,4]
+# Explanation: These arrays also are accepted [-5,-1,1,2,3] , [-3,-1,2,-2,4].
+# class Solution(object):
+#     def sumZero(self, n):
+#         """
+#         :type n: int
+#         :rtype: List[int]
+# #         """
+# b = [1,2,3]
+# print(b)
+# b.sort(reverse = True)
+# print('Hello',b)
 
 
+# ****************************CodeSigna/ questions 
+
+# def countTinyPairs(a, b, k):
+#   count = 0
+#   #b = b[::-1]
+#   for i in range(0,len(a)):      
+#           #print(j)
+#           stri = str(a[i])
+#           j = b[(len(b)-1)-i]
+#           strj = str(j)
+#           num_str = stri + strj
+#           if int(num_str) < k:
+#               count+=1
+#   return count
+
+# a = [1,2,3]
+# b = [1,2,3]
+# k = 32
+# print(countTinyPairs(a,b,k))
+
+
+a = [[3, 3, 4, 2],
+     [4, 4],
+     [4, 0, 3, 3],
+     [2, 3],
+     [3, 3, 3]]
+
+# answer 
+# meanGroups(a) = [[0, 4],
+#                  [1],
+#                  [2, 3]]
+
+# def meanGroups(a):
+#      means = []
+#     for i in a:
+#         mean = sum(a[i])/len(a[i])
+#         if mean not in means:
+#             means.append[[mean]]
+#         else:
+
+
+# Given an array of positive integers a, your task is to calculate the sum of every possible a[i] ∘ a[j], where a[i] ∘ a[j] is the concatenation of the string representations of a[i] and a[j] respectively.
+
+# Example
+
+# For a = [10, 2], the output should be concatenationsSum(a) = 1344.
+
+# a[0] ∘ a[0] = 10 ∘ 10 = 1010,
+# a[0] ∘ a[1] = 10 ∘ 2 = 102,
+# a[1] ∘ a[0] = 2 ∘ 10 = 210,
+# a[1] ∘ a[1] = 2 ∘ 2 = 22.
+# So the sum is equal to 1010 + 102 + 210 + 22 = 1344.
+
+# For a = [8], the output should be concatenationsSum(a) = 88.
+
+# There is only one number in a, and a[0] ∘ a[0] = 8 ∘ 8 = 88, so the answer is 88.
+# def concatSum(a):
+#     total = 0
+#     total_list = []
+#     str_a = str(a)
+#     for i in range(0, len(a)):
+#         for j in range(0,len(a)):
+#           str1 = str(a[i]) + str(a[j])
+#           total_list.append(int(str1))
+#     return sum(total_list)      
+
+# a = [8]
+
+# print(concatSum(a))
+
+
+
+# Example
+
+# For inputArray = [3, 6, -2, -5, 7, 3], the output should be
+# adjacentElementsProduct(inputArray) = 21.
+
+# 7 and 3 produce the largest product.
+
+
+# def adjacentElementsProduct(inputArray):    
+#     max_prod = 1
+#     max_prod = inputArray[0] * inputArray[1]
+#     for i in range(1,len(inputArray)):            
+#         if inputArray[i-1] * inputArray[i] > max_prod:
+#              max_prod = inputArray[i-1] * inputArray[i] 
+#     return max_prod
+
+
+
+# inputArray = [5, 1, 2, 3, 1, 4]     #= 6
+# inputArray1 =  [5, 6, -4, 2, 3, 2, -23]     #= 30
+
+# print(adjacentElementsProduct(inputArray))
+
+# Easy
+
+# Codewriting
+
+# # 300
+
+# Ratiorg got statues of different sizes as a present from CodeMaster for his birthday, each statue having an non-negative integer size. Since he likes to make things perfect, he wants to arrange them from smallest to largest so that each statue will be bigger than the previous one exactly by 1. He may need some additional statues to be able to accomplish that. Help him figure out the minimum number of additional statues needed.
+
+# Example
+
+# For statues = [6, 2, 3, 8], the output should be
+# makeArrayConsecutive2(statues) = 3.
+
+# Ratiorg needs statues of sizes 4, 5 and 7.
+
+# def makeArrayConsecutive2(statues):
+#     statues1 = sorted(statues)
+#     count = 0
+#     for i in range(0,len(statues1)-1):
+#         if statues1[i+1] != statues1[i] + 1:
+#             count+=1
+#     return count
+
+# statues = [6, 2, 3, 8]
+# print(makeArrayConsecutive2(statues))
+
+# 
+# John works at a clothing store. He has a large pile of socks that he must
+#  pair by color for sale. Given an array of integers representing the
+#   color of each sock, determine how many pairs of socks with matching colors there are.
+
+# For example, there are  socks with colors .
+#  There is one pair of color  and one of color . There are three odd socks left, one of each color. The number of pairs is .
+
+# Function Description
+
+# Complete the sockMerchant function in the editor below.
+#  It must return an integer representing the number of matching pairs of socks that are available.
+
+# sockMerchant has the following parameter(s):
+
+# n: the number of socks in the pile
+# ar: the colors of each sock
+
+
+def sockMerchant(n,arr):
+    pairs = 0
+    sock_dict = {}
+    for i in range(0,len(arr)):
+        if arr[i] not in sock_dict:
+          sock_dict[arr[i]] = 1
+        else:
+          sock_dict[arr[i]] +=1
+
+    for value in sock_dict.values():
+       if value//2 > 0:
+         pairs += value//2
+    return pairs
+n = 9      
+arr = [10 ,20, 20 ,10,10, 30, 50 ,10 ,20 ]
+print(sockMerchant(n,arr))     
+
+
+https://www.hackerrank.com/challenges/counting-valleys/problem?h_l=interview&playlist_slugs%5B%5D=interview-preparation-kit&playlist_slugs%5B%5D=warmup
+
+
+
+
+
+
+# # For inputArray = [3, 6, -2, -5, 7, 3], the output should be
+# # adjacentElementsProduct(inputArray) = 21.
+
+# # 7 and 3 produce the largest product.
+
+
+# def adjacentElementsProduct(inputArray):    
+#     max_prod = 1
+#     for i in range(1,len(inputArray)): 
+#         max_prod =   inputArray[i-1] * inputArray[i]    
+#         if inputArray[i-1] * inputArray[i] >= max_prod:
+#              max_prod = inputArray[i-1] * inputArray[i] 
+#     return max_prod
+
+# print(adjacentElementsProduct(inputArray))
+
+# inputArray = [5, 1, 2, 3, 1, 4]     #= 6
+# inputArray1 =  [5, 6, -4, 2, 3, 2, -23]    #= 30
