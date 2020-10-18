@@ -116,7 +116,7 @@
 
 #******************Week3-day4- WB Question
 
-# FInd smallest number  - (Without min)
+# FInd smallest number  - (Without min and sort)
 # Create a function that given a list of numbers (non-sorted) find the lowest number in the list and return it.
 # Example Input: [50,30,4,2,11,0]
 # Example Output: 0
@@ -1292,7 +1292,7 @@
 
 # Example 1:
 
-# Input: aa
+# Input: [3,1,2,1,1,2]
 # Output: true
 # Explanation: The value 1 has 3 occurrences, 2 has 2 and 3 has 1. No two values have the same number of occurrences.
 # Example 2:

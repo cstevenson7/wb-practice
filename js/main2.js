@@ -708,3 +708,558 @@ target = 6
 console.log(findSum(arr, target))
 
 
+
+
+
+/*
+
+        ALGO EXPERT QUESTIONS
+
+**/ 
+
+//Fibonachi
+//************RECURSIVE 
+// function getNthFib(n) {
+//     if (n===2){
+//         return 1;
+//     }else if (n===1){
+//         return 0
+//     }else{
+//         return getNthFib(n-1) + getNthFib(n-2)
+//     }  
+// }
+// console.log('working??')
+// console.log(getNthFib(6))
+
+//***********Loop */
+function getNthFib(n){
+   
+  if (n===2){
+      return 1;
+  }else if (n===1){
+      return 0
+  }else{
+  fib_series = [0,1]
+      if (n > 1){
+          for(let i =2; i < n; i++){
+              next_num = fib_series[i-1] + fib_series[i-2]
+              fib_series.push(next_num)
+          }
+      return parseInt(fib_series.slice(n-1))
+      }
+  }
+}
+
+
+//my solution
+//O(n^2) aka quardatic time | O(1) aka constant space
+// function twoNumberSum(array, targetSum) {
+   
+//     for(let i = 0; i < array.length; i++){
+//         for (let j = 0; j < array.length; j++){
+//             if (i != j){
+//                 if (array[i] + array[j] == targetSum){
+//                     // results.push(array[i])
+//                     // results.push(array[j])
+//                     return [array[i],array[j]]               
+//                 }
+//             }
+//         }
+//     }
+//     return [] 
+//   }
+  
+
+// array =   [3, 5, -4, 8, 11, 1, -1, 6]
+// target = 10
+// console.log(twoNumberSum(array,target))
+
+//AlgoExpert(AE) solution
+//O(nlog(n)) aka linear Logarithmic time | O(1) aka constant space
+
+function twoNumberSum(array, targetSum){
+  array.sort((a,b) => a-b);
+  let left = 0;
+  let right = array.length-1;
+  while (left < right){
+      //start at the two ends and work your way in
+      const currentSum = array[left] + array[right];
+      if(currentSum === targetSum){
+          return[array[left], array[right]];
+      }else if(currentSum < targetSum){
+          left++ ;    
+      }else if(currentSum > targetSum){
+          right--;
+      }
+  }
+  return [];
+}
+
+array =   [ -5,3, 8, 1,11, -1] 
+target = 7
+console.log(twoNumberSum(array,target))
+
+//******************************************** */
+function isValidSubsequence(array, sequence) {
+  // traverseing through both arrays at the same time with pointers keeping track of the indexes
+  let arrIdx = 0;
+  let seqIdx = 0;
+  //traversing bothe arrays at the same time
+  while (arrIdx < array.length && seqIdx < sequence.length){
+      //if we find a match move to the next number in the sequence
+      if (array[arrIdx] === sequence[seqIdx]){
+          seqIdx++;
+      }
+      //look at the next number in the array
+      arrIdx++;
+  }
+  // if the seqIdx == the length of the sequence that means we have
+  //found all the number of the seqence in that array. Note: thatindex number is increased after we find a match so the index number wiil match the length of the sequence 
+  return seqIdx == sequence.length;
+} 
+
+array =  [5, 1, 22, 25, 6, -1, 8, 10]
+sequence = [1, 6, -1, 2,10]
+console.log(isValidSubsequence(array,sequence))
+
+//Need to check this in solution can't get it to pass
+//Binary Search Tree aka BST 
+function findClosestValueInBst(tree, target) {
+  return findClosestValueInBstHelper(tree,target,tree.value)
+}
+function findClosestValueInBstHelper(tree, target, closest){
+  let currentNode = tree;
+  while (currentNode !== null){
+      if (Math.abs(target-closest) > Math.abs(target - currentNode.value)){
+          closest = currentNode.value;
+      }
+      if(target < currentNode.value){
+          currentNode = currentNode.left;
+      }else if (target > currentNode.value){
+          currentNode = currentNode.right;
+      }else{
+          break;
+      }
+      
+  }
+  return closest;
+}
+
+//*****************InsertionSort */
+
+//best O(n) time  | O(1)space
+//time is O(n^2) aka O n squared quadratic when n is the length of our array, could be many comparissons and swaps )
+// because the array is swapped inplace the space complexity is constant
+//Avg  O(n^2)  | O(1)
+//worst same as avg
+
+function insertionSort(array) {
+  for(let i = 1; i < array.length; i++){
+      let j = i;
+      while (j > 0 && array[j-1] >array[j]){
+          swap(j-1,j,array)
+          j--;
+      }
+  }
+  return array
+}
+
+function swap(i,j,array){
+  let temp = array[j];
+  array[j] = array[i]
+  array[i] = temp
+}
+
+array = [8, 5, 2, 9, 5, 6, 3]
+console.log(insertionSort(array))
+
+//*********Bubble sort
+// Worst Case: O(n^2) Time - O(1) Space
+// Best case time would be linear O(n) if the array is sorted- still have to go through the array  once to check.
+//O(n^2) time depending on n the length of the array quadratiec -  looping through the array MULTIPLE times (not just once)  until the array is sorted
+//O(1) space is constant doing swap in place - didn't allocate additional memmory
+
+function swap(i,j,array){
+  let temp = array[j];
+  array[j] = array[i]
+  array[i] = temp
+}
+
+function bubbleSort(array){
+  let isSorted = false
+  //so while the array is not sorted
+  while(!isSorted){
+      //set the isSorted flag true in case it is sorted
+      isSorted = true
+      for (let i = 0; i < array.length; i++){
+          if (array[i] > array[i+1]){
+              swap(i, i+1, array)
+              isSorted = false
+          }
+      } 
+  }
+  return array
+}
+
+array = [8, 5, 2, 9, 5, 6, 3]
+console.log(bubbleSort(array))
+
+//*************************************#Product Sum
+// # time complexity  - quadratic O(n^2) = with n the length of the array
+// # space compexity - constant O(n) - only 1 extra variable 
+
+function productSum(array, depth = 1){
+  let total_sum = 0;  
+  for (const element of array){
+      if (Array.isArray(element)){         
+          total_sum += productSum(element, depth +1);
+      }else{
+          total_sum += element;
+      }
+  }
+  return total_sum  * depth;
+}
+
+array = [5, 2, [7, -1], 3, [6, [-13, 8], 4]]
+console.log(productSum(array))
+
+//BST Branch Sum 
+
+class BinaryTree {
+  constructor(value) {
+    this.value = value;
+    this.left = null;
+    this.right = null;
+  }
+}
+
+function branchSums(root) {
+    const sums_list = []
+    calculateBranch(root, 0, sums_list)
+    return sums_list
+}
+
+function calculateBranch(node, branch_total, sums_list){
+    const new_total = branch_total + node.value
+    if (!node){
+        return        
+    }
+    if(!node.left && !node.right){
+        sums_list.push(new_total)
+        return
+    }
+    calculateBranch(node.left, new_total, sums_list)
+    calculateBranch(node.right,new_total,sums_list )
+}
+
+//Is Palindrome question
+// #Best time and space
+// O(n) time Go through string once but O(1) Constatn spave , only
+// using the pointers, nothing depends on size of the string for space complexity
+function isPalindrome(string){
+  let left_idx = 0;
+  let right_idx = string.length - 1;
+  while (left_idx < right_idx){
+      if (string[left_idx] !== string[right_idx]){
+              return false
+      }else{
+          left_idx ++;
+          right_idx--;
+      }
+  }
+  return true
+}
+
+// #*************** Caesar cipher encryption
+// # - non empty lowercase string and a non-neg integer (k) , returns new string by shifting " wrapping " alphabet by k letters
+
+// # input - non-empty lowercase string IF NOT JUST LOWERCase do
+//  #       -  a uppercase list as well
+// # output - string lowercase - nonempty
+// # edgecase - really large k numbers, use the modulo to get the reamonder
+// # assumptions 
+
+// # O(n) linear time = iterating through the input string  and O(1) constant space even if you use the alpa array the arrya is only 26 letters long Constant,  if the alphabet aray was "n" letters then it would not be constant
+// # tests your use of the modulo operator
+
+// # We can know that this works for loop-arounds by observing the following behavior:
+//    1%26 = 1
+// # 25%26=(0∗26+25)%26=25
+// # 26%26=(1∗26+0)%26=0
+// # 27%26=(1∗26+1)%26=1
+// # 28%26=(1∗26+2)%26=2
+// # and so on...
+
+function caesarCipherEncryptor(string, key) {
+  const alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+ const new_letters = [];
+ for (const letter of string){
+      new_idx = (alpha.indexOf(letter) + key) % alpha.length
+      new_letters.push(alpha[new_idx])
+ }
+ return new_letters.join('');
+}
+
+
+string = "xyz"
+key = 1
+console.log(caesarCipherEncryptor(string, key))
+
+
+
+
+
+// # ThreeNumberSum
+// # targetSum = find all triplets in the array that add up to the target sum
+// # numbers in acscending order and triplets in ascending order
+// # input = list and integer
+// # output = list of sub-arrays
+// # edgecase - if now numbers addup to target the return empty array
+// # assumptions - can assume non empty array of distict integers and an
+// #              integer representing the sum
+
+// #0(n^2) quadratic time  where n is the length of the array, need to iterate thur the for loop a and then we have to iterate thru again in the while loop.  0(n) linear - ome space usage beause if the sort and the storing of the triplets 
+
+
+//***********NOT WORKING FOR Some REASON??
+function threeNumberSum(array, targetSum) {
+  array.sort((a,b) => a - b);
+  const results = [];
+  for (let i = 0; i < array.length - 2; i++ ){
+      let left = i+1;
+      let right = array.length -1;
+      while (left < right ){
+        let current_sum = array[i] + array[left] + array[right];
+          if (current_sum ===  targetSum){
+              results.push([array[i], array[left] , array[right]]);
+              left ++;
+              right --;
+          }else if (current_sum < targetSum){ 
+              left++;
+          }else if (current_sum > targetSum){
+            right--;
+          }
+      }
+  }
+  return results;
+}
+
+array = [12, 3, 1, 2, -6, 5, -8, 6]
+target = 0
+console.log(threeNumberSum(array,target))
+
+// # *********************smallest difference
+// # input -  2 arrays - can be unequal length
+// # output - 1 array with 2 numbers number for first array in front
+// # edge case - 
+// # assumptions - 2 non-empty interger arrays only one pair will be correct answer
+
+// #O(n log(n) + m log(m)) when n = len of array1 and m = len of array2 - the arrays can be unequal in length - need to sort both arrays first and looping thru the first array  -linear quadratic time complexity 
+// #Space = O(1) - sorting arrays in place and the varaible we are are storing are constant space and array of the results (pair) and a diff sum -  nothing we are storing depends on the length of the arrays
+
+// # ask if you can sort the arrays in palce, if not you need to do do this:
+// #  a1_sorted = sorted(arrayOne)
+// #  a2_sorted = sorted(arayTwo) - this would take more space
+
+function smallestDifference(arrayOne, arrayTwo){
+  arrayOne.sort((a,b) => a - b);
+  arrayTwo.sort((a,b) => a - b);
+  let a1_left = 0;
+  let a2_left = 0;
+  let results = [];
+  let smallest_diff = Infinity;
+  let temp_diff = Infinity;
+
+  while (a1_left < arrayOne.length && a2_left < arrayTwo.length){
+      let num1 = arrayOne[a1_left];
+      let num2 = arrayTwo[a2_left];
+      if (num1 < num2){
+          temp_diff = num2 - num1
+          a1_left++;
+      }else if (num2 < num1){
+          temp_diff = num1 - num2
+          a2_left++;
+      }else{
+          return [num1, num2]
+      }
+
+      if (temp_diff < smallest_diff){
+          smallest_diff = temp_diff
+          results= [num1, num2]
+      }
+
+  }
+  return results
+}
+
+arrayOne = [-1, 5, 10, 20, 28, 3]
+arrayTwo = [26, 134, 135, 15, 17]
+console.log(smallestDifference(arrayOne, arrayTwo))
+
+//stack LAST IN FIRST OUT -  LIFO
+function nodeDepths(root){
+  let depth_sum = 0;
+  //need to store all of the nodes and their depths,
+  //could use array, but this is easier to read 
+  //the first entry is the root and the root node depth = 0
+  const stack = [{node:root, depth:0}];
+  //looping through the BT getting the node value and the depth
+  while (stack.length > 0){ 
+      //pop a node off the stack (LIFO)
+      //start at the top of the stack
+      const {node,depth}= stack.pop();
+      //check if the node value is null/none, if it is that means
+      // the tree is empty and we are dine
+      if (node ===null) {
+          continue;
+      }       
+      depth_sum += depth;
+      //now append the children nodes on both sides
+      stack.push({node: node.left, depth:depth + 1});
+      stack.push({node: node.right, depth:depth + 1});
+      
+  }
+  return depth_sum; 
+}
+
+// #Depth first searchNode class with name and an array of optional children nodes.Implement the dpethfirstSearch method on the node class, which takes in an empty array , traverses the tree using the depth firs search (navigating from left to right)
+// #stores all of the nodes names in an input array and returns it
+
+// # graphs a collection of nodes that may or maynot be connected. the nodes are called vertices and the branches(connections) are called edges
+// #  Explore first left branch, as far down (deep as we can ), then go to the next branch to the right.
+
+//  #111 vertices in this graph and 10 edges
+// #  time complexity = O(v + e) - add every nodes name(v) we iterate throught the for loop for as may childresas the tree has so that is how many edges there are as well.
+// #Space- complexity is O(v) - length of the return array
+class Node {
+  constructor(name) {
+    this.name = name;
+    this.children = [];
+  }
+
+  addChild(name) {
+    this.children.push(new Node(name));
+    return this;
+  }
+
+  depthFirstSearch(array) {
+    array.append(this.name)
+    for(let child of children){
+        child.depthFirstSearch(array)
+    }
+    return array
+  }
+}
+
+
+//************Find three largest numbers
+//Find the three largest numbers in an unsorted array
+// Input - integer array of at least three values
+// output - array of three sorted integers
+// edgecase - non
+// assumptions - can't sort array and array has at least three integers
+
+function findThreeLargest(array){
+  let largest = [null, null, null];
+  for (const num of array){
+      updateLargest(largest, num)
+  }
+  return largest
+}
+
+function updateLargest(largest,num){
+  if (largest[2]===null || num > largest[2]){
+      moveNums(largest,num,2)
+  } else if (largest[1] === null || num > largest[1]){
+      moveNums(largest,num,1)
+  } else if (largest[0] === null || num > largest[0]){
+      moveNums(largest, num, 0)
+  }
+}
+
+function moveNums(array, num, idx){
+  for(let i =0; i <= idx; i++){
+      if (i === idx){
+          array[i] = num
+      }else{
+          array[i] = array[i + 1]        
+      }
+  }
+}
+
+array = [10,5,9,10,12]
+console.log(findThreeLargest(array))
+
+// #Std practice is to define a helper function
+
+// # input - sorted integer array and target integer
+// # output - return the index of the target, or -1 if not found
+// # edgcases -
+// # assumptions - the array will not be empty?
+
+function binarySearch(array, target){
+  return binarySearchHelper(array, target, 0, array.length - 1)
+}
+
+function binarySearchHelper(array, target, left, right){
+  while (left <= right){
+      let middle = Math.floor((left + right)/2)
+      let potential = array[middle]
+
+      if (target === potential){
+          return middle
+      }else if (target < potential) {
+          right = middle - 1
+      }else{
+          //target > potential
+          left = middle + 1
+      }
+  }
+  return -1
+}
+
+array = [0, 1, 21, 33, 45, 45, 61, 71, 72, 73]
+target = 33
+console.log(binarySearch(array,target))
+
+// #*************************Selection sort
+// #
+// # interate through list find the smallest number 
+// # and swap it with the current index pointer
+// # input - unsorted integer array
+// # output - sorted array
+// # edgecase
+// # assumptions
+
+// # time complexity = O(n^2)quardratic - where n is the
+// # length of the array need to traverse array multiple times
+// # to find the smallest number, the longer the array the longer it would take
+
+// # space complexity = O(1) constant - the swaps are in place and the solution
+// #  does not need additional storage or space is not dependent the length of the aray
+
+function selectionSort(array){
+  //current_idx is our sorted pointer
+  let current_idx = 0;
+  while (current_idx < array.length -1){
+       let smallest_idx = current_idx;
+       //for loop finds the next smallest number
+       for (let i = current_idx + 1; i < array.length; i++){
+          if(array[smallest_idx] > array[i]){
+               smallest_idx = i;
+          }      
+      }
+      swap( current_idx, smallest_idx, array)
+      current_idx ++;
+  }
+  return array
+}
+
+function swap(i, j, array){
+  let temp = array[i];
+  array[i] = array[j];
+  array[j] = temp
+}
+
+array = [8, 5, 2, 9, 5, 6, 3]
+console.log(selectionSort(array))

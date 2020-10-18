@@ -41,6 +41,24 @@ str1 = 'Racecar'
 str2 = 'asdhf'
 palindrome(str2)
 
+#Best time and space
+O(n) time Go through string once but O(1) Constatn spave , only
+using the pointers, nothing depends on size of the string for space complexity
+
+def isPalindrome(string):
+    #start of string
+    left_idx = 0
+    #end of string
+    right_idx =  len(string) - 1
+    while left_idx < right_idx:
+        # if you start at the begining of the word and the end of the word,
+        # the leters will be the same as you work your way to the middle if it is a palindrome
+        if string[left_idx] != string[right_idx]:
+            return False
+        left_idx +=1
+        right_idx -= 1
+    return True
+
 
 
 
@@ -136,10 +154,21 @@ print rem_vowel(string)
 
 
 #*********************Binary Search Practice Week 3
-#Big O notation is O(log(n))
+# Time complexity - O(log n) logrithmic we for not have to traverse the whole array, we are splitting the array if half for the seach every time we go through the while loop - better than the linear
+
+# Space complexity - O(1) - constant, just meed to keep track couple of variables - the space does not depend on the length of the array 
 #                                                               
 # arguments are: list of nums, the num we are trying to find, the start (aka index0) of the array, 
 #                 and the end of the array (aka last index (len(array)-1)
+#Std practice is to define a helper function
+
+
+# input - sorted integer array and target integer
+# output - return the index of the target, or -1 if not found
+# edgcases -
+# assumptions - the array will not be empty?
+
+
 def binarySearchHelper(array, target, left, right):
     # are we at the end of the array?
     while left <= right:
@@ -395,12 +424,14 @@ print(twoPointers(alist))
 #***************** Bubble Sort Week3day3 ****************
 
 Bubble Sort
-Worst Case: O(n^2) Time - O(1) Space
-#usually use a while loop ina bubble sort, best case for this type of sort would be linear O(n) -
+# Worst Case: O(n^2) Time - O(1) Space
+#Best case time would be linear O(n) if the array is sorted- still have to go through the array  once to check. 
+# //O(n^2) time depending on n the length of the array quadratiec -  looping through the array MULTIPLE times (not just once)  until the array is sorted
+# //O(1) space is constant doing swap in place - didn't allocate additional memmory
 
 #Helper function first
 def swap(i,j,array):
-    array[i], array[j] = array[j], array[i] # these are index umbersa
+    array[i], array[j] = array[j], array[i] # these are index numbers
     
     
 def bubbleSort(array):
@@ -1237,6 +1268,26 @@ print(twoPointers(my_list2,target))
 # #         :rtype: List[int]
 
 
+# *************codewars6**************String array duplicates
+# In this Kata, you will be given an array of strings and your task is to remove all consecutive duplicate letters from each string in the array.
+
+# For example:
+# dup(["abracadabra","allottee","assessee"]) = ["abracadabra","alote","asese"].
+# dup(["kelless","keenness"]) = ["keles","kenes"].
+
+# Strings will be lowercase only, no spaces. See test cases for more examples.
+# Test.it("Basic tests")
+# Test.assert_equals(dup(["ccooddddddewwwaaaaarrrrsssss","piccaninny","hubbubbubboo"]),['codewars','picaniny','hubububo'])
+# Test.assert_equals(dup(["abracadabra","allottee","assessee"]),['abracadabra','alote','asese'])
+# Test.assert_equals(dup(["kelless","keenness"]), ['keles','kenes'])
+# Test.assert_equals(dup(["Woolloomooloo","flooddoorroommoonlighters","chuchchi"]), ['Wolomolo','flodoromonlighters','chuchchi'])
+# Test.assert_equals(dup(["adanac","soonness","toolless","ppellee"]), ['adanac','sones','toles','pele'])
+# Test.assert_equals(dup(["callalloo","feelless","heelless"]), ['calalo','feles','heles'])
+# Test.assert_equals(dup(["putteellinen","keenness"]), ['putelinen','kenes'])
+# Test.assert_equals(dup(["kelless","voorraaddoosspullen","achcha"]), ['keles','voradospulen','achcha'])
+# Good luck!
+# If you like this Kata, please try:
+
 #for i in range(1,n+1):
 def sumZero(n):
     num_list = []
@@ -1250,3 +1301,541 @@ def sumZero(n):
             
 
 print(sumZero(5))
+
+##Python solution for  AE Valid Subsequence Easy
+
+#O(n)- linear time loop through the array once - n is the length of the main array
+#O(1) - constant  space because we are just storing the two index variable, nothing that increases with the size of the inputs
+
+def  isValidSubsequence(array, sequence):
+    #  traverseing through both arrays at the same time with pointers keeping track of  the indexes
+    arrIdx = 0
+    seqIdx = 0
+    while arrIdx < len(array) and seqIdx < len(sequence):
+        if array[arrIdx] == sequence[seqIdx]:
+            #we have found a match so look for the next value in 
+            #the sequence, we only move the seq index when we find a match
+            seqIdx += 1
+        #now check the next value in the main array
+        arrIdx += 1
+    #if we have gone through the entire sequesnce we know we have a valid
+    #subsequnce because we only moved it fowrard when we had a match
+    # if seqIdx == len(sequence):
+    #     return True
+    # else:
+    #     return False
+    # or  
+    return seqIdx == len(sequence)  
+  
+
+array =  [5, 1, 22, 25, 6, -1, 8, 10]
+sequence = [1, 6, -1, 10]
+print(isValidSubsequence(array, sequence))
+
+
+#Binary Search Tree aka BST 
+def findClosestValueInBst(tree, target):
+                                #here initializing closest value as infinity, could use the root node if you wanted
+    return findClosestValueInBstHelper(tree,target, float("inf"))
+
+def findClosestValueInBstHelper(tree,target, closest):
+    #need a variable that points(keeps track) of the current node
+    currentNode = tree
+    #while we are not dealing with a leaf or bottom of the tree    
+    while currentNode is not None:    
+        #otherwise we want the ABS difference between the
+        #closest node and the target node
+        #if the abs(target - closest) is > abs(target - tree.value)
+        #then update closest
+        if abs(target - closest) > abs(target - currentNode.value):
+            closest = currentNode.value
+            #here we decide which side of the tree we need to go down
+            # if target is less than the tree.value(root node) then go down the left side
+        if target < currentNode.value:
+            currentNode = currentNode.left
+        # if target is greater than the currentNode.value(root node) then go down the right side
+        elif: target > currentNode.value:
+            ccurrentNode = currentNode.right
+        else:
+            break
+    return closest
+
+#*******************************   
+#Product Sum
+# time complexity  - quadratic O(n^2) = with n the length of the array
+# space compexity - constant O(n) - only 1 extra variable 
+
+def productSum(array, depth = 1):
+    total_sum = 0   
+    for element in array:        
+        if type(element) is list:  
+            total_sum += productSum(element, depth +1)               
+        else:
+             total_sum += element
+    return total_sum * depth
+
+array = [5, 2, [7, -1], 3, [6, [-13, 8], 4]]
+print(productSum(array))
+
+#answer = 5 +2 +(2 * (7 + -1 ) + 3 + (2 * ( 6 + (3 *(-13 + 8)  + 4)
+
+#BST Node Depths
+the distance betweena node ina BT and the tree's root is called the nodes's depth
+
+class BinaryTree:
+    def __init__(self, value):  
+        self.value = value
+        self.left = None
+        self.right = None
+  
+#leaf nodes are at the very bottom of the branches
+#depth of root node = 0, recursive or iterative
+
+#time = O(n) where n= the number of nodes in the tree. traversing once though the tree
+#space = RECURSIVE- O(h) where h is the height of the tree- recursive calls keep incrementing the call stack calls as you move down the tree - a balanced tree makes a difference becoause yo
+
+#iterative
+def nodeDepths(root):
+    sum_depths = 0
+    stack = [{"node": root, "depth" = 0}]
+    while len(stack) > 0:
+        nodeInfo = stack.pop()
+        node, depth = nodeInfo["node"], nodeInfo["depth"]
+        if node is None:
+            continue
+        sum_depths += depth
+        stack.append({"node":node.left, "depth": depth +1})
+        stack.append({"node":node.right, "depth": depth +1})
+    return sum_depths
+
+#recursive
+def node(root, depth = 0):
+    # handle Base Case of recursion
+    if root is None:
+        return 0
+    return depth + nodeDepths(root.left, depth+1) + nodeDepths(root.right, depth+1)
+
+#missed the python version    
+//BST Branch Sum 
+
+class BinaryTree {
+  constructor(value) {
+    this.value = value;
+    this.left = null;
+    this.right = null;
+  }
+}
+
+function branchSums(root) {
+    const sums_list = []
+    calculateBranch(root, 0, sums_list)
+    return sums_list
+}
+
+function calculateBranch(node, branch_total, sums_list){
+    const new_total = branch_total + node.value
+    if (!node){
+        return        
+    }
+    if(!node.left && !node.right){
+        sums_list.push(new_total)
+        return
+    }
+    calculateBranch(node.left, new_total, sums_list)
+    calculateBranch(node.right,new_total,sums_list )
+}
+
+#BST Node Depths
+the distance betweena node ina BT and the tree's root is called the nodes's depth
+
+class BinaryTree:
+    def __init__(self, value):  
+        self.value = value
+        self.left = None
+        self.right = None
+  
+#leaf nodes are at the very bottom of the branches
+#depth of root node = 0, recursive or iterative
+
+#time = O(n) where n= the number of nodes in the tree. traversing once though the tree
+#space = RECURSIVE- O(h) where h is the height of the tree- recursive calls keep incrementing the call stack calls as you move down the tree - a balanced tree makes a difference becoause yo
+
+#iterative
+def nodeDepths(root):
+    sum_depths = 0
+    #need to store all of the nodes and their depths
+    stack = [{"node": root, "depth" = 0}]
+    while len(stack) > 0:
+        nodeInfo = stack.pop()
+        node, depth = nodeInfo["node"], nodeInfo["depth"]
+        if node is None:
+            continue
+        sum_depths += depth
+        stack.append({"node":node.left, "depth": depth +1})
+        stack.append({"node":node.right, "depth": depth +1})
+    return sum_depths
+
+#recursive
+def node(root, depth = 0):
+    # handle Base Case of recursion
+    if root is None:
+        return 0
+    return depth + nodeDepths(root.left, depth+1) + nodeDepths(root.right, depth+1)
+
+#**********************Leetcode
+
+# Remove Duplicates inplace 
+def removeDuplicates(nums):
+ 
+    if len(nums) == 0:
+        return 0
+    else:
+        i = 0    
+        while i < len(nums)-1:
+            if nums[i] == nums[i+1]:
+                del nums[i]                
+            else:
+                i +=1
+        return len(nums)
+
+nums = [0,0,1,1,1,2,2,3,3,4]
+print(removeDuplicates(nums)) 
+
+#**********move zeros to end inplace 
+def moveZeros(nums):
+    count = 0
+    for i in range(0, len(nums)):
+        if nums[i] != 0:
+            nums[i],nums[count] = nums[count], nums[i]
+            count +=1            
+    return nums
+
+nums = [0,1,0,3,12]
+print(moveZeros(nums))
+
+
+# Given two strings S and T, return if they are equal when both are typed into empty text editors. # means a backspace character.
+# Note that after backspacing an empty text, the text will continue empty.
+
+def backspaceStrings(S,T):
+    new_s = []
+    new_t = []
+    
+    for i in range(0,len(S)):
+        if S[i] != "#":
+            new_s.append(S[i])
+        else:
+            if (len(new_s) > 0):
+                new_s.pop()
+
+    for i in range(0,len(T)):
+        if T[i] != "#":
+            new_t.append(T[i])
+        else:
+            if len(new_t) > 0:
+                new_t.pop()
+    
+    return new_s == new_t
+
+S = "a#c"
+T = "a"
+
+print(backspaceStrings(S,T))
+
+
+#*************** Caesar cipher encryption
+# - non empty lowercase string and a non-neg integer (k) , returns new string by shifting " wrapping " alphabet by k letters
+
+# input - non-empty lowercase string IF NOT JUST LOWERCase do
+ #       -  a uppercase list as well
+# output - string lowercase - nonempty
+# edgecase - really large k numbers, use the modulo to get the reamonder
+# assumptions 
+
+# O(n) linear time = iterating through the input string  and O(1) constant space even if you use the alpa array the arrya is only 26 letters long Constant,  if the alphabet aray was "n" letters then it would not be constant
+# tests your use of the modulo operator
+
+# We can know that this works for loop-arounds by observing the following behavior:
+# 25%26=(0∗26+25)%26=25
+# 26%26=(1∗26+0)%26=0
+# 27%26=(1∗26+1)%26=1
+# 28%26=(1∗26+2)%26=2
+# and so on...
+
+def swapLetters(string, key):
+    alpha = list("abcdefghijklmnopqrstuvwxyz") 
+    new_letters = []
+    #index of a = 0, index of z = 25
+    for letter in string:
+        new_idx = (alpha.index(letter) + key) % len(alpha)
+        new_letter = alpha[new_idx]
+        print (f'New index for letter is {new_idx}, new letter is {new_letter}')
+        new_letters.append(new_letter)
+    return new_letters
+
+string =  'xyz'
+key = 1
+print(swapLetters(string, key))
+
+# ThreeNumberSum
+# targetSum = find all triplets in the array that add up to the target sum
+# numbers in acscending order and triplets in ascending order
+# input = list and integer
+# output = list of sub-arrays
+# edgecase - if now numbers addup to target the return empty array
+# assumptions - can assume non empty array of distict integers and an
+#              integer representing the sum
+
+#0(n^2) quadratic time  where n is the length of the array, need to iterate thur the for loop a and then we have to iterate thru again in the while loop.  0(n) linear - ome space usage beause if the sort and the storing of the triplets 
+def threeNumberSum(sorted_nums, targetSum):
+    #first sort the array so you can use left and right pointers
+    sorted_nums.sort()
+    print(sorted_nums)
+    results = [] 
+    #range -2 becuase we are always looking at 3 numbers at a time see line 21 
+    for i in range(0,len(sorted_nums)-2):
+        left = i + 1
+        right = len(sorted_nums)-1
+        while left < right:
+            current_sum = sorted_nums[i] + sorted_nums[left] + sorted_nums[right] 
+            if current_sum == targetSum:
+                results.append([sorted_nums[i], sorted_nums[left],sorted_nums[right]])            
+                left +=1            
+                right -=1
+            elif current_sum < targetSum:
+                left +=1
+            else:
+                right-=1 
+    return results
+
+array = [12, 3, 1, 2, -6, 5, -8, 6]
+target = 0
+
+print(threeNumberSum(array, target))
+
+
+# *********************smallest difference
+# input -  2 arrays - can be unequal length
+# output - 1 array with 2 numbers number for first array in front
+# edge case - 
+# assumptions - 2 non-empty interger arrays only one pair will be correct answer
+
+#O(n log(n) + m log(m)) when n = len of array1 and m = len of array2 - the arrays can be unequal in length - need to sort both arrays first and looping thru the first array  -linear quadratic time complexity 
+#Space = O(1) - sorting arrays in place and the varaible we are are storing are constant space and array of the results (pair) and a diff sum -  nothing we are storing depends on the length of the arrays
+
+# ask if you can sort the arrays in palce, if not you need to do do this:
+#  a1_sorted = sorted(arrayOne)
+#  a2_sorted = sorted(arayTwo) - this would take more space
+
+def smallestDifference(arrayOne, arrayTwo):
+    arrayOne.sort()
+    arrayTwo.sort()
+    results = []
+    a1_left = 0
+    a2_left = 0  
+
+    #this simplfies things because anything will be smaller that infinity
+    #if gives you a starting point
+    smallest_diff = float("inf")
+    temp_diff = float("inf")
+    #arrays can be unequal length
+    while a1_left < len(arrayOne) and a2_left < len(arrayTwo):
+        num1 = arrayOne[a1_left]
+        num2 = arrayTwo[a2_left]
+        #could do abs diff here but easier to read this way               
+        if  num1 < num2:
+            temp_diff = num2 - num1
+            # #since our arrays are sorted and num1 is less than num2, if we move
+            # to the mext number in array2 ( it is larger) so the diff would be #greater,so move to the next number in array1 and the diff might be
+            # smaller
+            #move to the next number in array1
+            a1_left +=1
+        elif num2 < num1:
+            temp_diff = num1 - num2
+            #move to the next number in array2
+            a2_left+=1
+        else:
+            return [num1, num2]
+
+        if temp_diff < smallest_diff:
+            smallest_diff = temp_diff
+            results = [num1,num2]
+
+    return results
+      
+arrayOne = [-1, 5, 10, 20, 28, 3]
+arrayTwo = [26, 134, 135, 15, 17]
+print(smallestDifference(arrayOne, arrayTwo))
+
+
+
+#****************************Binary tree example
+
+# good sites:
+# https://www.w3resource.com/python-exercises/data-structures-and-algorithms/python-binary-search-tree-index.php
+
+# https://www.tutorialspoint.com/python_data_structure/python_binary_tree.htm
+
+#Creating a tree with a single node.
+# class Node:
+#     def __init__(self, data):
+#         self.left = None
+#         self.right = None
+#         self.data = data
+
+
+#   def PrintTree(self):
+#         print(self.data)
+
+# root = Node(10)
+# root.PrintTree()
+
+# # just like calling this
+# def addNums(num1, num2):
+#     total = num1 + num2
+#     print(total)
+# addNums(3,4)
+
+# Inserting values into a BT
+class Node:
+    def __init__(self, data):
+        self.left = None
+        self.right = None
+        self.data = data
+
+
+    def insert(self, data):
+        # Compare the new value with the parent node
+        if self.data:
+            if data < self.data:
+                if self.left is None:
+                    self.left = Node(data)
+                else:
+                    self.left.insert(data)
+            elif data > self.data:
+                if self.right is None:
+                    self.right = Node(data)
+                else:
+                    self.right.insert(data)
+        else:
+            self.data = data
+
+# Print the tree
+    def PrintTree(self):
+        if self.left:
+            self.left.PrintTree()
+        print( self.data),
+        if self.right:
+            self.right.PrintTree()
+
+# Use the insert method to add nodes
+root = Node(12)
+root.insert(6)
+root.insert(14)
+root.insert(3)
+
+root.PrintTree()
+
+#*********************Depth first search
+# Node class with name and an array of optional children nodes.Implement the dpethfirstSearch method on the node class, which takes in an empty array , traverses the tree using the depth firs search (navigating from left to right)
+#stores all of the nodes names in an input array and returns it
+
+# graphs a collection of nodes that may or maynot be connected. the nodes are called vertices and the branches(connections) are called edges
+#  Explore first left branch, as far down (deep as we can ), then go to the next branch to the right.
+
+ #111 vertices in this graph and 10 edges
+#  time complexity = O(v + e) - add every nodes name(v) we iterate throught the for loop for as may childresas the tree has so that is how many edges there are as well.
+#Space- complexity is O(v) - length of the return array
+class Node:
+    #every Node has a name and an array of children nodes
+    def __init__name(self, name):
+        self.children = []
+        self.name = name
+
+    #can add a new child to the Node by appending a new Node to the children array
+    def addChild(self,name):
+        self.children.append(Node(name))
+
+    def depthFirstSearch(self,array):
+        #append to the array the nodes name
+        array.append(self.name)
+        #for every child in the children - call the depthFirst function on the child
+        # and that will add the child name to the array
+        for child in self.children:
+            child.depthFirstSearch(array)
+        return array
+
+# ***************Find three largest numbers
+
+# input - array of at least three integers
+# output - array of threee intergers in sorted in acsending order
+# edge cases
+# assumptions - cannot sort array, there can be duplicate numbers
+
+# time - O(n) linear  where n is the length of the array
+# space - O(1) - constant just storing a larray of thre numbers
+#need to keep track and store the three largest numbers
+def findThreeLargestNumbers(array):
+    largest = [None,None,None]
+    for num in array:
+        updateLargest(num, largest)
+    return largest
+
+#helper function is cleaner than doing everything in the for loop
+def updateLargest(num,largest):
+    #first see if we have a largest number 
+    if largest[2] == None or num > largest[2]:        
+        shiftAndUpdate(largest, num, 2)
+    elif largest[1] == None or num > largest[1]:
+        shiftAndUpdate(largest, num, 1)
+    elif largest[0] == None or num > largest[0]:        
+        shiftAndUpdate(largest, num, 0)
+        
+
+def shiftAndUpdate(array2, num, idx):
+    for i in range(idx + 1):
+        if i == idx:
+            array2[i] = num
+        else:
+            array2[i] = array2[i +1]
+
+array = [141, 1, 17, -7]
+print(findThreeLargestNumbers(array))
+
+#*************************Selection sort
+# going to create two sublists
+# interate through list find the smallest number 
+# and swap it it to the first sublist
+# input - unsorted integer array
+# output - sorted array
+# edgecase
+# assumptions
+
+# time complexity = O(n^2)quardratic - where n is the
+# length of the array need to traverse array multiple times
+# to find the smallest number, the longer the array the longer it would take
+
+# space complexity = O(1) constant - the swaps are in place and the solution
+#  does not need additional storage or space is not dependent the length of the aray
+
+
+def selectionSort(array):
+    # starting index of sorted imaginary sublist
+    current_idx = 0
+    #keep going till you have sorted the
+    # whole array- then the current-idx will equal the index of the last number in the array
+    while current_idx < len(array) - 1:
+        smallest_idx = current_idx
+        for i in range(current_idx + 1, len(array)):
+            if array[smallest_idx] > array[i]:
+                smallest_idx = i
+        swap(current_idx, smallest_idx, array)
+        current_idx +=1
+    return array
+
+def swap(i, j, array):
+    array[i], array[j] = array[j],array[i]
+
+
+array = [8, 5, 2, 9, 5, 6, 3]
+print(selectionSort(array))
